@@ -343,7 +343,7 @@ public class HueJsonParser {
         final ArrayList<String> jsonGroupsArrayList = parseNumericalItems(rawJsonGroups);
 
         // Use a BiFunction and .indexOf to gather each light's json and its id (its index in the array + 1)
-        return jsonGroupsArrayList.stream()
+        return jsonGroupsArrayList.parallelStream()
                 .map(jsonString -> JSON_TO_GROUP.apply((long) (jsonGroupsArrayList.indexOf(jsonString) +
                                                                1), jsonString))
                 .collect(Collectors.toList());
@@ -374,7 +374,7 @@ public class HueJsonParser {
         final ArrayList<String> jsonLightsArrayList = parseNumericalItems(rawJsonLights);
 
         // Use a BiFunction and .indexOf to gather each light's json and its id (its index in the array + 1)
-        return jsonLightsArrayList.stream()
+        return jsonLightsArrayList.parallelStream()
                 .map(jsonString -> JSON_TO_LIGHT.apply((long) (jsonLightsArrayList.indexOf(jsonString) +
                                                                1), jsonString))
                 .collect(Collectors.toList());
@@ -391,7 +391,7 @@ public class HueJsonParser {
         final ArrayList<String> jsonSensorsArrayList = parseNumericalItems(rawJsonSensors);
 
         // Use a BiFunction and .indexOf to gather each light's json and its id (its index in the array + 1)
-        return jsonSensorsArrayList.stream()
+        return jsonSensorsArrayList.parallelStream()
                 .map(jsonString -> JSON_TO_SENSOR.apply((long) (jsonSensorsArrayList.indexOf(jsonString) +
                                                                 1), jsonString))
                 .collect(Collectors.toList());
@@ -422,7 +422,7 @@ public class HueJsonParser {
         final ArrayList<String> jsonRulesArrayList = parseNumericalItems(rawJsonRules);
 
         // Use a BiFunction and .indexOf to gather each light's json and its id (its index in the array + 1)
-        return jsonRulesArrayList.stream()
+        return jsonRulesArrayList.parallelStream()
                 .map(jsonString -> JSON_TO_RULE.apply((long) (jsonRulesArrayList.indexOf(jsonString) + 1), jsonString))
                 .collect(Collectors.toList());
     }
