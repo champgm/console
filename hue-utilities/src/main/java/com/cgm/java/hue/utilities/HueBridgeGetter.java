@@ -164,15 +164,13 @@ public class HueBridgeGetter extends HttpInteractor {
         final ArrayList<Scene> allScenes = new ArrayList<>(HueJsonParser.parseScenesFromJson(rawJsonResults));
 
         final ImmutableList.Builder<Scene> sceneSetBuilder = ImmutableList.builder();
-        for (final Scene allScene : allScenes) {
-            sceneSetBuilder.add(getScene(bridgeIp, token, allScene.getId().toString()));
-        }
+        allScenes.parallelStream().forEach(scene -> sceneSetBuilder.add(getScene(bridgeIp, token, scene.getId().toString())));
 
         if (!onlyV2) {
             return sceneSetBuilder.build();
         }
 
-        return sceneSetBuilder.build().stream()
+        return sceneSetBuilder.build().parallelStream()
                 .filter(scene -> scene.getVersion().equals("2"))
                 .collect(Collectors.toList());
     }
